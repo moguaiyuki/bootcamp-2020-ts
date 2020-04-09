@@ -34,20 +34,20 @@ router.get("/", (req, res, next) => {
 });
 
 router.patch("/:id", (req, res, next) => {
-  const id = parseInt(req.params.id);
-  const todo = todoList.find(todo => todo.id == id);
+  const id = Number(req.params.id);
+  const todo = todoList.find(todo => todo.id === id);
   const { name, done } = req.body;
-  if (!todo) return;
+  if (!todo) return res.status(404).send(todo);
   todo.name = name;
   todo.done = done;
   return res.status(201).send(todo);
 });
 
 router.delete("/:id", (req, res, next) => {
-  const id = parseInt(req.params.id);
-  const index = todoList.findIndex(todo => todo.id == id);
+  const id = Number(req.params.id);
+  const index = todoList.findIndex(todo => todo.id === id);
   todoList.splice(index, 1);
   return res.status(204).send("done");
 });
 
-module.exports = router;
+export default router;
